@@ -1,28 +1,28 @@
 require "tiny_settings/version"
+require "yaml"
 
 module TinySettings
   class Settings
-    attr_accessor :file_path
-    FILE_PATH = nil
+    attr_accessor :file_path,:settings
+    FILE_PATH = ""
 
     def initialize()
-      @file_path ||= FILE_PATH
+      @file_path ||= [FILE_PATH , "settings.yml"].join
+      @settings = {}
       self
     end
 
     def load_settings
       begin 
-        file_path ||= FILE_PATH
-        YAML.load_file('settings.yml')
+        @settings = YAML.load_file(@file_path)
       rescue
         {}
       end
     end
 
-    def save_settings(settings = Yaml.new)
-      file_path ||= FILE_PATH
-      File.open('settings.yml', 'w') do |f|
-        f.write settings.to_yaml
+    def save_settings
+      File.open(@file_path, 'w') do |f|
+        f.write @settings.to_yaml
       end
     end
   end
