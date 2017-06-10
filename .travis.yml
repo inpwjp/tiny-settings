@@ -9,6 +9,5 @@ rvm:
 
 install:
   - bundle install
-  - rm settings.yml
 script:
   - bundle exec rake test
