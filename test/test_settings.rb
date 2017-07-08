@@ -54,4 +54,12 @@ class TestSettings < ActiveSupport::TestCase
     assert_equal(@settings.symbolize_keys![:example] , @test_hash["example"])
     assert_equal(@settings.settings[:example], @test_hash["example"])
   end
+
+  def test_methodize!
+    @settings.settings = @test_hash
+    assert_nothing_raised do 
+      @settings.methodize!
+    end
+    assert_equal(@settings.settings.example , 1 )
+  end
 end
