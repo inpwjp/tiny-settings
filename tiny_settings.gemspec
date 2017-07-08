@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["inpw@mua.biglobe.ne.jp"]
 
   spec.summary       = %q{get settings from yaml and ENV.}
-  spec.description   = %q{many settings from yaml file and ENVIROMENT.get ENV (ex docker). get file.t can use Hash data.}
+  spec.description   = %q{many settings from yaml file and ENVIROMENT.get ENV (ex docker) and set the yaml file.}
   spec.homepage      = "https://www.github.com/inpwjp/tiny_settings"
   spec.license       = "MIT"
 

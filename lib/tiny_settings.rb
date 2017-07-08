@@ -25,5 +25,14 @@ module TinySettings
         f.write @settings.to_yaml
       end
     end
+
+    def symbolize_keys
+      self.settings.map{|k,v| [k.to_sym, v] }.to_h
+    end
+
+    def symbolize_keys!
+      tmp_hash = symbolize_keys
+      self.settings = tmp_hash
+    end
   end
 end

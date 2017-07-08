@@ -9,6 +9,7 @@ class TestSettings < ActiveSupport::TestCase
   include TinySettings
   def setup
     @test_hash = {"example"=> 1}
+    @settings = Settings.new()
   end
 
   def test_init
@@ -18,31 +19,39 @@ class TestSettings < ActiveSupport::TestCase
   end
 
   def test_set_settings
-    settings = Settings.new()
-    settings.settings = @test_hash
-    assert_equal(settings.settings["example"] , @test_hash["example"])
+    @settings.settings = @test_hash
+    assert_equal(@settings.settings["example"] , @test_hash["example"])
   end
 
   def test_save_settings
-    settings = Settings.new()
-    settings.settings = @test_hash
+    @settings.settings = @test_hash
     assert_nothing_raised do
-      settings.save_settings
+      @settings.save_settings
     end
-    FileUtils.rm(settings.file_path)
+    FileUtils.rm(@settings.file_path)
   end
 
   def test_load_settings
-    settings = Settings.new()
-    settings.settings = @test_hash
+    @settings.settings = @test_hash
     assert_nothing_raised do
-      settings.save_settings
+      @settings.save_settings
     end
-    settings = Settings.new()
+    @settings = Settings.new()
     assert_nothing_raised do
-      settings.load_settings
-      assert_equal(settings.settings["example"], @test_hash["example"])
+      @settings.load_settings
+      assert_equal(@settings.settings["example"], @test_hash["example"])
     end
-    FileUtils.rm(settings.file_path)
+    FileUtils.rm(@settings.file_path)
+  end
+
+  def test_symbolize_keys
+    @settings.settings = @test_hash
+    assert_equal(@settings.symbolize_keys[:example] , @test_hash["example"])
+  end
+
+  def test_symbolize_keys!
+    @settings.settings = @test_hash
+    assert_equal(@settings.symbolize_keys![:example] , @test_hash["example"])
+    assert_equal(@settings.settings[:example], @test_hash["example"])
   end
 end
