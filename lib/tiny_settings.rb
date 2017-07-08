@@ -1,4 +1,5 @@
 require "tiny_settings/version"
+require "methodize/hash"
 require "yaml"
 
 module TinySettings
@@ -28,6 +29,10 @@ module TinySettings
 
     def symbolize_keys
       self.settings.map{|k,v| [k.to_sym, v] }.to_h
+    end
+
+    def methodize!
+      self.settings.methodize! 
     end
 
     def symbolize_keys!
