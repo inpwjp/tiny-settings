@@ -26,7 +26,7 @@ class TestSettings < ActiveSupport::TestCase
   def test_save_settings
     @settings.settings = @test_hash
     assert_nothing_raised do
-      @settings.save_settings
+      @settings.save
     end
     FileUtils.rm(@settings.file_path)
   end
@@ -34,13 +34,14 @@ class TestSettings < ActiveSupport::TestCase
   def test_load_settings
     @settings.settings = @test_hash
     assert_nothing_raised do
-      @settings.save_settings
+      @settings.save
     end
     @settings = Settings.new()
     assert_nothing_raised do
-      @settings.load_settings
+      @settings.load
       assert_equal(@settings.settings["example"], @test_hash["example"])
     end
+    puts @settings.file_path
     FileUtils.rm(@settings.file_path)
   end
 

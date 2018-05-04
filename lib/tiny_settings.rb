@@ -5,15 +5,15 @@ require "yaml"
 module TinySettings
   class Settings
     attr_accessor :file_path,:settings
-    FILE_PATH = ""
+    FILE_PATH = Dir.pwd
 
     def initialize()
-      @file_path ||= [FILE_PATH , "settings.yml"].join
+      @file_path ||= [FILE_PATH ,"/", "settings.yml"].join
       @settings = {}
       self
     end
 
-    def load_settings
+    def load
       begin 
         @settings = YAML.load_file(@file_path)
       rescue
@@ -21,7 +21,7 @@ module TinySettings
       end
     end
 
-    def save_settings
+    def save
       File.open(@file_path, 'w') do |f|
         f.write @settings.to_yaml
       end
